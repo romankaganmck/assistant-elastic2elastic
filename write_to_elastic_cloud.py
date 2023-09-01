@@ -19,9 +19,9 @@ def read_config(section, key):
 
 # Initialize Elasticsearch client
 # Other Constants
-ELASTICSEARCH_HOST = read_config('elasticsearch', 'host')
-ELASTICSEARCH_USER = read_config('elasticsearch', 'user')
-ELASTICSEARCH_PASSWORD = read_config('elasticsearch', 'password')
+ELASTICSEARCH_HOST = read_config('elasticsearch_cloud', 'host')
+ELASTICSEARCH_USER = read_config('elasticsearch_cloud', 'user')
+ELASTICSEARCH_PASSWORD = read_config('elasticsearch_cloud', 'password')
 
 es = Elasticsearch(
     [ELASTICSEARCH_HOST],

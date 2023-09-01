@@ -2,13 +2,24 @@
 from elasticsearch import Elasticsearch
 import json
 
-# Define config
-host = "pd-g2-es-1.production.iknowmed.com"
-port = 9200
-timeout = 5000
-index = "patdocument-50"
+
+# Constants
+CONFIG_FILE = 'config.conf'
+
+# Read configuration settings
+def read_config(section, key):
+    config = configparser.ConfigParser()
+    config.read(CONFIG_FILE)
+    return config.get(section, key)
+
+# Initialize Elasticsearch client
+# Other Constants
+ELASTICSEARCH_HOST = read_config('elasticsearch_legacy', 'host')
+ELASTICSEARCH_PORT = read_config('elasticsearch_legacy', 'port')
+timeout = read_config('elasticsearch_legacy', 'timeout')
+index = read_config('elasticsearch_legacy', 'index')
 doc_type = None
-size = 500
+batch_size = read_config('elasticsearch_legacy', 'batch_size')
 body = {
     "query": {
         "match_all": {}  # Define your query here
@@ -17,7 +28,7 @@ body = {
 
 # Init Elasticsearch instance
 es = Elasticsearch(
-    [{'host': host, 'port': port}],
+    [{'host': ELASTICSEARCH_HOST, 'port': ELASTICSEARCH_PORT}],
     timeout=timeout
 )
 
@@ -45,7 +56,7 @@ data = es.search(
     index=index,
     doc_type=doc_type,
     scroll='2m',
-    size=size,
+    size=batch_size,
     body=body
 )
 
