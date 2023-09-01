@@ -3,8 +3,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
-*.so
+
+*.log
+my_log.log
+config.conf
+output_legacy_elastic-50-new.json
+output.json
+*.json
 
 # Distribution / packaging
 .Python
